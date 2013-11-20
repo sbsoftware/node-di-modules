@@ -4,7 +4,7 @@
   "description": "Simple helper to create module specification objects for di",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/ --recursive"
+    "test": "./node_modules/.bin/mocha test/ --recursive -R list"
   },
   "repository": {
     "type": "git",
