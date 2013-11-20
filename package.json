@@ -25,6 +25,7 @@
   "devDependencies": {
     "should": "~2.1.0",
     "a": "~0.3.7",
-    "mocha": "~1.14.0"
+    "mocha": "~1.14.0",
+    "sinon": "~1.7.3"
   }
 }
