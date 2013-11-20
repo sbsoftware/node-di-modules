@@ -1,0 +1,30 @@
+{
+  "name": "di-modules",
+  "version": "0.0.0",
+  "description": "Simple helper to create module specification objects for di",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbsoftware/node-di-modules.git"
+  },
+  "keywords": [
+    "node-di",
+    "di",
+    "dependency",
+    "injection"
+  ],
+  "author": "Stefan Bilharz <stefan@sbsoftware.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sbsoftware/node-di-modules/issues"
+  },
+  "homepage": "https://github.com/sbsoftware/node-di-modules",
+  "devDependencies": {
+    "should": "~2.1.0",
+    "a": "~0.3.7",
+    "mocha": "~1.14.0"
+  }
+}
