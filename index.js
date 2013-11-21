@@ -10,15 +10,23 @@
     this[name] = [type, module];
   };
 
-  Modules.prototype.addDir = function (dirPath) {
+  Modules.prototype.addDir = function (dirPath, recursive) {
     var that = this;
     var files = fs.readdirSync(dirPath);
 
     files.filter(function (file) {
-      return file.indexOf('.js') > 0;
+      return file.indexOf('.js') > 0 || file.indexOf('.') === -1;
     }).forEach(function (file) {
+      var path;
       file = file.replace('.js', '');
-      that.add(file, 'factory', require(dirPath + '/' + file));
+      path = dirPath + '/' + file;
+      if (fs.statSync(path).isDirectory()) {
+        if (recursive) {
+          that.addDir(path, recursive);
+        }
+      } else {
+        that.add(file, 'factory', require(path));
+      }
     });
   };
 
