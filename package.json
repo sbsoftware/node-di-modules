@@ -1,6 +1,6 @@
 {
   "name": "di-modules",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple helper to create module specification objects for di",
   "main": "index.js",
   "scripts": {
