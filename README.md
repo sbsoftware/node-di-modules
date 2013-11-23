@@ -28,3 +28,9 @@ Usage
     new di.Injector([modules]).invoke(fs, myModule, yourModule) {
       ...
     });
+
+Ideas
+-----
+
+* .addDir() could support other module types than 'factory', either by specifying when calling it
+or by indicating it in the file name
