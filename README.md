@@ -1,7 +1,11 @@
 node-di-modules
 ===============
 
-Simple helper to create module specification objects for node-di
+Simple helper to create module specification objects for node-di.
+It gives you two methods to add modules to the container. The first one, .add(), is not more than
+just setting modules[moduleName] = [type, module] manually. The reason why I built this is the second
+method, .addDir(), which dynamically requires all \*.js files in the given folder and adds them to the
+module container, using the file name as the module name and assuming type = 'factory'.
 
 
 Installation
