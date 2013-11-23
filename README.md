@@ -22,7 +22,9 @@ Usage
 
     modules.add('fs', 'value', require('fs'));
     modules.addDir('./src'); // contains myModule.js and yourModule.js, which must be "factory" modules
+    modules.addDir('./src2', true); // recursively goes deeper into subdirectories
 
+    // use di as if you filled the modules container manually
     new di.Injector([modules]).invoke(fs, myModule, yourModule) {
       ...
     });
