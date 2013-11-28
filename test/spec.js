@@ -48,15 +48,15 @@
 
         describe('not recursive', function () {
           it('should require every .js file in the given folder', function () {
-            expectRequire('./testDir/module1').return(module1);
-            expectRequire('./testDir/module2').return(module2);
+            expectRequire('./testDir/module1.js').return(module1);
+            expectRequire('./testDir/module2.js').return(module2);
             // requiring ., .. or wrong.html would throw "Cannot find module" error
             modules.addDir('./testDir');
           });
 
           it('should add the required modules as type "factory" to the object', function () {
-            expectRequire('./testDir/module1').return(module1);
-            expectRequire('./testDir/module2').return(module2);
+            expectRequire('./testDir/module1.js').return(module1);
+            expectRequire('./testDir/module2.js').return(module2);
             modules.addDir('./testDir');
             modules.module1.should.be.an.Array;
             modules.module1[0].should.equal('factory');
@@ -76,16 +76,16 @@
           });
 
           it('should require every .js file in the given folder and its subfolders', function () {
-            expectRequire('./testDir/module1').return(module1);
-            expectRequire('./testDir/module2').return(module2);
-            expectRequire('./testDir/subDir/module3').return(module3);
+            expectRequire('./testDir/module1.js').return(module1);
+            expectRequire('./testDir/module2.js').return(module2);
+            expectRequire('./testDir/subDir/module3.js').return(module3);
             modules.addDir('./testDir', true);
           });
 
           it('should add the required modules from subdirectories as type "factory" to the object', function () {
-            expectRequire('./testDir/module1').return(module1);
-            expectRequire('./testDir/module2').return(module2);
-            expectRequire('./testDir/subDir/module3').return(module3);
+            expectRequire('./testDir/module1.js').return(module1);
+            expectRequire('./testDir/module2.js').return(module2);
+            expectRequire('./testDir/subDir/module3.js').return(module3);
             modules.addDir('./testDir', true);
             modules.module3.should.be.an.Array;
             modules.module3[0].should.equal('factory');

@@ -18,14 +18,13 @@
       return file.indexOf('.js') > 0 || file.indexOf('.') === -1;
     }).forEach(function (file) {
       var path;
-      file = file.replace('.js', '');
       path = dirPath + '/' + file;
       if (fs.statSync(path).isDirectory()) {
         if (recursive) {
           that.addDir(path, recursive);
         }
       } else {
-        that.add(file, 'factory', require(path));
+        that.add(file.replace('.js', ''), 'factory', require(path));
       }
     });
   };
