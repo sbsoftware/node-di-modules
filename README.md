@@ -21,6 +21,7 @@ Usage
     var modules = new (require('di-modules'))();
 
     modules.add('fs', 'value', require('fs'));
+    // directory paths must be relative to the current working directory of the process
     modules.addDir('./src'); // contains myModule.js and yourModule.js, which must be "factory" modules
     modules.addDir('./src2', true); // recursively goes deeper into subdirectories
 

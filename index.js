@@ -24,7 +24,7 @@
           that.addDir(path, recursive);
         }
       } else {
-        that.add(file.replace('.js', ''), 'factory', require(path));
+        that.add(file.replace('.js', ''), 'factory', require(process.cwd() + '/' + path));
       }
     });
   };
