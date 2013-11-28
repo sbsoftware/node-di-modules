@@ -18,7 +18,7 @@ Usage
 -----
 
     var di = require('di');
-    var modules = new require('di-modules')();
+    var modules = new (require('di-modules'))();
 
     modules.add('fs', 'value', require('fs'));
     modules.addDir('./src'); // contains myModule.js and yourModule.js, which must be "factory" modules
