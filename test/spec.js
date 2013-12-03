@@ -39,24 +39,24 @@
 
         beforeEach(function () {
           readdirStub = sinon.stub(fs, 'readdirSync');
-          readdirStub.withArgs('./testDir').returns(['.', '..', 'module1.js', 'wrong.html', 'module2.js', 'subDir']);
+          readdirStub.withArgs(__dirname + '/testDir').returns(['.', '..', 'module1.js', 'wrong.html', 'module2.js', 'subDir']);
           statStub = sinon.stub(fs, 'statSync').returns({isDirectory: function () { return false; }});
-          statStub.withArgs('./testDir/subDir').returns({isDirectory: function () { return true; }});
+          statStub.withArgs(__dirname + '/testDir/subDir').returns({isDirectory: function () { return true; }});
           module1 = {};
           module2 = {};
         });
 
         describe('not recursive', function () {
           it('should require every .js file in the given folder', function () {
-            expectRequire('./testDir/module1.js').return(module1);
-            expectRequire('./testDir/module2.js').return(module2);
+            expectRequire(__dirname + '/testDir/module1.js').return(module1);
+            expectRequire(__dirname + '/testDir/module2.js').return(module2);
             // requiring ., .. or wrong.html would throw "Cannot find module" error
             modules.addDir('./testDir');
           });
 
           it('should add the required modules as type "factory" to the object', function () {
-            expectRequire('./testDir/module1.js').return(module1);
-            expectRequire('./testDir/module2.js').return(module2);
+            expectRequire(__dirname + '/testDir/module1.js').return(module1);
+            expectRequire(__dirname + '/testDir/module2.js').return(module2);
             modules.addDir('./testDir');
             modules.module1.should.be.an.Array;
             modules.module1[0].should.equal('factory');
@@ -72,20 +72,20 @@
 
           beforeEach(function () {
             module3 = {};
-            readdirStub.withArgs('./testDir/subDir').returns(['.', '..', 'module3.js']);
+            readdirStub.withArgs(__dirname + '/testDir/subDir').returns(['.', '..', 'module3.js']);
           });
 
           it('should require every .js file in the given folder and its subfolders', function () {
-            expectRequire('./testDir/module1.js').return(module1);
-            expectRequire('./testDir/module2.js').return(module2);
-            expectRequire('./testDir/subDir/module3.js').return(module3);
+            expectRequire(__dirname + '/testDir/module1.js').return(module1);
+            expectRequire(__dirname + '/testDir/module2.js').return(module2);
+            expectRequire(__dirname + '/testDir/subDir/module3.js').return(module3);
             modules.addDir('./testDir', true);
           });
 
           it('should add the required modules from subdirectories as type "factory" to the object', function () {
-            expectRequire('./testDir/module1.js').return(module1);
-            expectRequire('./testDir/module2.js').return(module2);
-            expectRequire('./testDir/subDir/module3.js').return(module3);
+            expectRequire(__dirname + '/testDir/module1.js').return(module1);
+            expectRequire(__dirname + '/testDir/module2.js').return(module2);
+            expectRequire(__dirname + '/testDir/subDir/module3.js').return(module3);
             modules.addDir('./testDir', true);
             modules.module3.should.be.an.Array;
             modules.module3[0].should.equal('factory');

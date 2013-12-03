@@ -2,6 +2,8 @@
   'use strict';
 
   var fs = require('fs');
+  var path = require('path');
+  var callsite = require('callsite');
 
   function Modules() {
   }
@@ -12,6 +14,8 @@
 
   Modules.prototype.addDir = function (dirPath, recursive) {
     var that = this;
+    var stack = callsite();
+    dirPath = path.resolve(path.dirname(stack[1].getFileName()), dirPath);
     var files = fs.readdirSync(dirPath);
 
     files.filter(function (file) {
@@ -24,7 +28,7 @@
           that.addDir(path, recursive);
         }
       } else {
-        that.add(file.replace('.js', ''), 'factory', require(process.cwd() + '/' + path));
+        that.add(file.replace('.js', ''), 'factory', require(path));
       }
     });
   };
