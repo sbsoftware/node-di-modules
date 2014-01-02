@@ -18,9 +18,11 @@
 
     describe('methods', function () {
       var modules;
+      var readdirStub;
 
       beforeEach(function () {
         modules = new Modules();
+        readdirStub = sinon.stub(fs, 'readdirSync');
       });
 
       describe('.add()', function () {
@@ -34,11 +36,10 @@
       });
 
       describe('.addDir()', function () {
-        var readdirStub, statStub;
+        var statStub;
         var module1, module2;
 
         beforeEach(function () {
-          readdirStub = sinon.stub(fs, 'readdirSync');
           readdirStub.withArgs(__dirname + '/testDir').returns(['.', '..', 'module1.js', 'wrong.html', 'module2.js', 'subDir']);
           statStub = sinon.stub(fs, 'statSync').returns({isDirectory: function () { return false; }});
           statStub.withArgs(__dirname + '/testDir/subDir').returns({isDirectory: function () { return true; }});
