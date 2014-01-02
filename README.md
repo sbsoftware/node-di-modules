@@ -39,3 +39,9 @@ Ideas
 
 * .addDir() could support other module types than 'factory', either by specifying when calling it
 or by indicating it in the file name
+
+Changelog
+---------
+
+* 0.2.0
+  * .addNodeModules()
