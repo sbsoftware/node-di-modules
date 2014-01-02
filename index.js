@@ -5,6 +5,11 @@
   var path = require('path');
   var callsite = require('callsite');
 
+  function getFullPath(dirPath) {
+    var stack = callsite();
+    return path.resolve(path.dirname(stack[2].getFileName()), dirPath);
+  }
+
   function Modules() {
   }
 
@@ -14,8 +19,7 @@
 
   Modules.prototype.addDir = function (dirPath, recursive) {
     var that = this;
-    var stack = callsite();
-    dirPath = path.resolve(path.dirname(stack[1].getFileName()), dirPath);
+    dirPath = getFullPath(dirPath);
     var files = fs.readdirSync(dirPath);
 
     files.filter(function (file) {
@@ -31,6 +35,24 @@
         that.add(file.replace('.js', ''), 'factory', require(path));
       }
     });
+  };
+
+  Modules.prototype.addNodeModules = function (descriptor) {
+    var that = this;
+    if (descriptor === undefined || typeof descriptor === 'string') {
+      var dirPath = getFullPath(descriptor || 'node_modules');
+      var files = fs.readdirSync(dirPath);
+
+      files.filter(function (file) {
+        return file.indexOf('.') === -1;
+      }).forEach(function (module) {
+        that.add(module, 'value', require(module));
+      });
+    } else if (descriptor.length) {
+      descriptor.forEach(function (module) {
+        that.add(module, 'value', require(module));
+      });
+    }
   };
 
   module.exports = Modules;

@@ -6,6 +6,7 @@
   var expectRequire = require('a').expectRequire;
 
   var fs = require('fs');
+  var path = require('path');
   var Modules = require('../index.js');
 
   describe('di-modules', function () {
@@ -95,9 +96,64 @@
         });
 
         afterEach(function () {
-          fs.readdirSync.restore();
           fs.statSync.restore();
         });
+      });
+
+      describe('.addNodeModules()', function () {
+        var expressModule = {};
+        var mochaModule = {};
+
+        describe('without descriptor', function () {
+          beforeEach(function () {
+            readdirStub.withArgs(__dirname + '/node_modules').returns(['.', '..', 'express', 'mocha']);
+          });
+
+          it('should require all entries in node_modules and add them as values', function () {
+            expectRequire('express').return(expressModule);
+            expectRequire('mocha').return(mochaModule);
+            modules.addNodeModules();
+            modules.should.have.properties('express', 'mocha');
+            modules.express[0].should.equal('value');
+            modules.express[1].should.equal(expressModule);
+            modules.mocha[0].should.equal('value');
+            modules.mocha[1].should.equal(mochaModule);
+          });
+        });
+
+        describe('with string descriptor', function () {
+          beforeEach(function () {
+            readdirStub.withArgs(path.normalize(__dirname + '/../node_modules')).returns(['.', '..', 'express', 'mocha']);
+          });
+
+          it('should require all entries in the path specified by the string descriptor and add them as values', function () {
+            expectRequire('express').return(expressModule);
+            expectRequire('mocha').return(mochaModule);
+            modules.addNodeModules('../node_modules');
+            modules.should.have.properties('express', 'mocha');
+            modules.express[0].should.equal('value');
+            modules.express[1].should.equal(expressModule);
+            modules.mocha[0].should.equal('value');
+            modules.mocha[1].should.equal(mochaModule);
+          });
+        });
+
+        describe('with array descriptor', function () {
+          it('should require every array entry as a module and add it as a value', function () {
+            expectRequire('express').return(expressModule);
+            expectRequire('mocha').return(mochaModule);
+            modules.addNodeModules(['express', 'mocha']);
+            modules.should.have.properties('express', 'mocha');
+            modules.express[0].should.equal('value');
+            modules.express[1].should.equal(expressModule);
+            modules.mocha[0].should.equal('value');
+            modules.mocha[1].should.equal(mochaModule);
+          });
+        });
+      });
+
+      afterEach(function () {
+        fs.readdirSync.restore();
       });
     });
   });

@@ -24,9 +24,13 @@ Usage
     // directory paths must be relative to __dirname of the calling file
     modules.addDir('./src'); // contains myModule.js and yourModule.js, which must be "factory" modules
     modules.addDir('./src2', true); // recursively goes deeper into subdirectories
+    // add all node_modules entries (in the same directory as the calling file)
+    modules.addNodeModules();
+    // add specific modules by name
+    modules.addNodeModules(['events', 'express', 'async']);
 
     // use di as if you filled the modules container manually
-    new di.Injector([modules]).invoke(fs, myModule, yourModule) {
+    new di.Injector([modules]).invoke(async, fs, events, express, myModule, yourModule) {
       ...
     });
 
