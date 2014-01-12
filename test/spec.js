@@ -140,14 +140,14 @@
 
         describe('with array descriptor', function () {
           it('should require every array entry as a module and add it as a value', function () {
-            expectRequire(__dirname + '/node_modules/express').return(expressModule);
-            expectRequire(__dirname + '/node_modules/mocha').return(mochaModule);
-            modules.addNodeModules(['express', 'mocha']);
-            modules.should.have.properties('express', 'mocha');
-            modules.express[0].should.equal('value');
-            modules.express[1].should.equal(expressModule);
-            modules.mocha[0].should.equal('value');
-            modules.mocha[1].should.equal(mochaModule);
+            expectRequire('path').return(expressModule);
+            expectRequire('fs').return(mochaModule);
+            modules.addNodeModules(['path', 'fs']);
+            modules.should.have.properties('path', 'fs');
+            modules.path[0].should.equal('value');
+            modules.path[1].should.equal(expressModule);
+            modules.fs[0].should.equal('value');
+            modules.fs[1].should.equal(mochaModule);
           });
         });
       });

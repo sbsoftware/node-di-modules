@@ -39,10 +39,9 @@
 
   Modules.prototype.addNodeModules = function (descriptor) {
     var that = this;
-    var dirPath;
 
     if (descriptor === undefined || typeof descriptor === 'string') {
-      var files;
+      var dirPath, files;
 
       dirPath = getFullPath(descriptor || 'node_modules');
       files = fs.readdirSync(dirPath);
@@ -53,9 +52,8 @@
         that.add(module, 'value', require(dirPath + '/' + module));
       });
     } else if (descriptor.length) {
-      dirPath = getFullPath('node_modules');
       descriptor.forEach(function (module) {
-        that.add(module, 'value', require(dirPath + '/' + module));
+        that.add(module, 'value', require(module));
       });
     }
   };
