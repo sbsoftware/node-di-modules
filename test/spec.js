@@ -110,8 +110,8 @@
           });
 
           it('should require all entries in node_modules and add them as values', function () {
-            expectRequire('express').return(expressModule);
-            expectRequire('mocha').return(mochaModule);
+            expectRequire(__dirname + '/node_modules/express').return(expressModule);
+            expectRequire(__dirname + '/node_modules/mocha').return(mochaModule);
             modules.addNodeModules();
             modules.should.have.properties('express', 'mocha');
             modules.express[0].should.equal('value');
@@ -127,8 +127,8 @@
           });
 
           it('should require all entries in the path specified by the string descriptor and add them as values', function () {
-            expectRequire('express').return(expressModule);
-            expectRequire('mocha').return(mochaModule);
+            expectRequire(path.normalize(__dirname + '/../node_modules/express')).return(expressModule);
+            expectRequire(path.normalize(__dirname + '/../node_modules/mocha')).return(mochaModule);
             modules.addNodeModules('../node_modules');
             modules.should.have.properties('express', 'mocha');
             modules.express[0].should.equal('value');
@@ -140,8 +140,8 @@
 
         describe('with array descriptor', function () {
           it('should require every array entry as a module and add it as a value', function () {
-            expectRequire('express').return(expressModule);
-            expectRequire('mocha').return(mochaModule);
+            expectRequire(__dirname + '/node_modules/express').return(expressModule);
+            expectRequire(__dirname + '/node_modules/mocha').return(mochaModule);
             modules.addNodeModules(['express', 'mocha']);
             modules.should.have.properties('express', 'mocha');
             modules.express[0].should.equal('value');

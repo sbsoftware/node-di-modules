@@ -39,18 +39,23 @@
 
   Modules.prototype.addNodeModules = function (descriptor) {
     var that = this;
+    var dirPath;
+
     if (descriptor === undefined || typeof descriptor === 'string') {
-      var dirPath = getFullPath(descriptor || 'node_modules');
-      var files = fs.readdirSync(dirPath);
+      var files;
+
+      dirPath = getFullPath(descriptor || 'node_modules');
+      files = fs.readdirSync(dirPath);
 
       files.filter(function (file) {
         return file.indexOf('.') === -1;
       }).forEach(function (module) {
-        that.add(module, 'value', require(module));
+        that.add(module, 'value', require(dirPath + '/' + module));
       });
     } else if (descriptor.length) {
+      dirPath = getFullPath('node_modules');
       descriptor.forEach(function (module) {
-        that.add(module, 'value', require(module));
+        that.add(module, 'value', require(dirPath + '/' + module));
       });
     }
   };
